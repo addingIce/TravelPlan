@@ -72,8 +72,6 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; display: block;
 }
 .card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.12); }
-.card[aria-disabled="true"] { filter: grayscale(1) opacity(.72); cursor: default; }
-.card[aria-disabled="true"]:hover { transform: none; box-shadow: var(--shadow); }
 .card-photo { aspect-ratio: 16/9; background: linear-gradient(140deg, var(--river), var(--moss)); position: relative; }
 .card-photo::after {
   content: attr(data-name); position: absolute; left: 0; right: 0; bottom: 0;
@@ -139,16 +137,6 @@ footer { text-align: center; color: var(--muted); font-size: 13px; padding: 30px
         <span class="card-cta">查看行程</span>
       </div>
     </a>
-
-    <div class="card" aria-disabled="true">
-      <div class="card-photo" data-name="可复用模板" style="background:linear-gradient(140deg,#7A7A7A,#2C2C2C)"></div>
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="pill">模板</span><span class="pill warm">仅本地复用</span>
-        </div>
-        <p class="card-desc">空白模板，已含完整 CSS/JS/JSON 结构。仅用于生成本仓库内新行程，不对外展示。</p>
-      </div>
-    </div>
   </div>
 </div>
 
