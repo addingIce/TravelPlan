@@ -1,0 +1,2188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>金华出发 · 浙江山地避暑自驾 7 天</title>
+  <!-- 高德地图, no Leaflet needed -->
+  <style>
+    :root {
+      --bg: #f6f3ea;
+      --ink: #1c261f;
+      --muted: #647066;
+      --panel: #fffdf6;
+      --panel-2: #e9f1df;
+      --line: rgba(28, 38, 31, .14);
+      --moss: #476847;
+      --river: #2f7f85;
+      --coral: #c85d46;
+      --sun: #e2a93b;
+      --shadow: 0 18px 45px rgba(39, 52, 42, .12);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(71,104,71,.12), transparent 34%),
+        linear-gradient(315deg, rgba(47,127,133,.14), transparent 38%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      align-items: end;
+      padding: 28px 18px 34px;
+      color: #fdfbf2;
+      background:
+        linear-gradient(180deg, rgba(18,31,23,.15), rgba(18,31,23,.88)),
+        radial-gradient(circle at 20% 18%, rgba(226,169,59,.55), transparent 22%),
+        radial-gradient(circle at 82% 24%, rgba(47,127,133,.72), transparent 28%),
+        linear-gradient(140deg, #263e2d, #426b49 46%, #254e57);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 140px;
+      background: linear-gradient(0deg, var(--bg), transparent);
+    }
+    .hero-inner {
+      width: min(960px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    h1 {
+      margin: 18px 0 12px;
+      max-width: 820px;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-size: clamp(44px, 9vw, 86px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      max-width: 720px;
+      margin: 0;
+      color: rgba(253,251,242,.86);
+      font-size: 17px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+      max-width: 760px;
+    }
+    .stat {
+      border-top: 1px solid rgba(255,255,255,.22);
+      padding-top: 12px;
+      min-height: 72px;
+    }
+    .stat b { display: block; font-size: 22px; }
+    .stat span { color: rgba(253,251,242,.72); font-size: 13px; }
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: -10px auto 52px;
+      position: relative;
+      z-index: 2;
+    }
+    section { margin: 30px 0; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+    .section-note { color: var(--muted); font-size: 14px; margin: 0; }
+    .grid { display: grid; gap: 14px; }
+    .two, .three { grid-template-columns: 1fr; }
+    .panel, .slot, .hotel-area, .drive-card, .dining-card, .tip-card, .notice {
+      background: rgba(255,253,246,.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+    }
+    .panel, .hotel-area, .drive-card, .dining-card, .tip-card, .notice { padding: 16px; }
+    .notice {
+      border-left: 5px solid var(--coral);
+      background: #fff8ed;
+    }
+    .pretrip-todo {
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+    .todo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #edf5e6;
+      border: 1px solid rgba(71,104,71,.16);
+    }
+    .todo-item input { margin-top: 4px; accent-color: var(--moss); }
+    .todo-deadline {
+      color: var(--coral);
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .fact-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+    .fact-list div {
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(233,241,223,.75);
+      border: 1px solid rgba(71,104,71,.12);
+    }
+    .fact-list dt {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--moss);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .fact-list dd { margin: 0; color: var(--ink); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #24402e;
+      background: #e6efd9;
+      border: 1px solid rgba(71,104,71,.16);
+    }
+    .drive-card h3, .hotel-area h3, .dining-card h4, .slot h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+    .drive-card .code {
+      display: inline-flex;
+      color: #fff;
+      background: var(--river);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .hotel-options { display: grid; gap: 10px; margin-top: 12px; }
+    .hotel-option {
+      padding: 12px;
+      border-radius: 8px;
+      background: #f6f4ea;
+      border: 1px solid var(--line);
+    }
+    .tier {
+      color: #fff;
+      background: var(--moss);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .amap-embed {
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #d8e3d0;
+    }
+    .amap-frame {
+      display: block;
+      width: 100%;
+      height: 520px;
+      border: 0;
+      background: #d8e3d0;
+    }
+    .map-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: rgba(255,253,246,.94);
+      border-top: 1px solid var(--line);
+    }
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--river);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .map-caption {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .osm-fallback {
+      margin-top: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,253,246,.86);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .osm-fallback summary {
+      cursor: pointer;
+      padding: 13px 16px;
+      font-weight: 850;
+      color: var(--moss);
+    }
+    .osm-fallback p {
+      margin: 0;
+      padding: 0 16px 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    #map {
+      height: 380px;
+      width: 100%;
+      border-top: 1px solid var(--line);
+      overflow: hidden;
+      background: #d8e3d0;
+    }
+    .route-pin {
+      border: 2px solid #fff;
+      border-radius: 999px;
+      background: var(--coral);
+      box-shadow: 0 6px 16px rgba(0,0,0,.25);
+      color: #fff;
+      text-align: center;
+      font-weight: 800;
+    }
+    .route-pin__num { display: grid; place-items: center; width: 24px; height: 24px; }
+    .day {
+      display: grid;
+      gap: 14px;
+      padding: 18px 0 28px;
+      border-top: 1px solid var(--line);
+    }
+    .day:first-child { border-top: 0; }
+    .day-head {
+      display: grid;
+      gap: 8px;
+    }
+    .day-kicker {
+      color: var(--coral);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .day-title {
+      margin: 0;
+      font-size: 24px;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    }
+    .day-tips, .alternatives {
+      display: grid;
+      gap: 8px;
+    }
+    .mini {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(226,169,59,.16);
+      border: 1px solid rgba(226,169,59,.28);
+      font-size: 14px;
+    }
+    .slots {
+      display: grid;
+      gap: 14px;
+    }
+    .slot {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 170px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(71,104,71,.9), rgba(47,127,133,.74)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.09) 0 8px, transparent 8px 16px);
+    }
+    .photo::after {
+      content: attr(data-name);
+      position: absolute;
+      inset: auto 14px 12px;
+      color: rgba(255,255,255,.88);
+      font-weight: 850;
+      font-size: 18px;
+      text-shadow: 0 2px 12px rgba(0,0,0,.28);
+    }
+    .photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .slot-body { padding: 15px; }
+    .slot-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .period {
+      color: #fff;
+      background: var(--coral);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3eddc;
+      color: #3f473f;
+      border: 1px solid rgba(28,38,31,.12);
+      font-size: 12px;
+    }
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(28,38,31,.1);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 850;
+      font-size: 13px;
+      border: 1px solid rgba(28,38,31,.12);
+    }
+    .nav-link--amap {
+      color: #fff;
+      background: var(--river);
+    }
+    .nav-link--system {
+      color: #24402e;
+      background: #e6efd9;
+    }
+    .slot-route-info {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      background: rgba(71,104,71,.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .slot-route-info a {
+      color: var(--river);
+      font-size: 12px;
+      white-space: nowrap;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .slot-route-info a:hover { text-decoration: underline; }
+    .reminder-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #ffe6d8;
+      color: #8c321f;
+      border: 1px solid rgba(200,93,70,.28);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .dining-list { display: grid; gap: 12px; }
+    .dish-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .source-line {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .hero { min-height: 82vh; padding: 44px 28px 54px; }
+      .hero-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      main { margin-top: -18px; }
+      .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .fact-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .slot { grid-template-columns: minmax(260px, 35%) 1fr; }
+      .slot .photo { min-height: 100%; aspect-ratio: auto; }
+      .day-head { grid-template-columns: 230px 1fr; align-items: start; }
+      .slots { gap: 16px; }
+      .amap-frame { height: 560px; }
+      #map { height: 440px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">金华自驾出发 · 排除神仙居和云上草原</span>
+      <h1>金华出发 · 浙江山地避暑自驾 7 天</h1>
+      <p class="subtitle">磐安溪谷、缙云仙都、松阳古村、云和梯田/景宁大漈、遂昌南尖岩。把热的时段留给休息，把清晨和傍晚留给山风。</p>
+      <div class="hero-stats">
+        <div class="stat"><b>7 天 6 晚</b><span>可一键压缩为 6 天</span></div>
+        <div class="stat"><b>自驾环线</b><span>少绕路，山地节奏</span></div>
+        <div class="stat"><b>2 人友好</b><span>拍照、溪谷、咖啡</span></div>
+        <div class="stat"><b>午后避晒</b><span>雷阵雨季节排程</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>出发前待办</h2>
+          <p class="section-note">按示例出发日 2026-07-20 计算，可改。</p>
+        </div>
+      </div>
+      <div class="panel" id="todo-list"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>行前须知</h2>
+          <p class="section-note">暑期山地自驾重点看雨、路、停车。</p>
+        </div>
+      </div>
+      <div class="panel">
+        <dl class="fact-list" id="pretrip"></dl>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>自驾交通</h2>
+          <p class="section-note">车程为规划参考，实际以地图实时路况为准。</p>
+        </div>
+      </div>
+      <div class="grid two" id="drive-list"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>住宿片区</h2>
+          <p class="section-note">不锁死单一酒店，按片区和预算选。</p>
+        </div>
+      </div>
+      <div class="grid three" id="hotels"></div>
+    </section>
+
+    <section>
+      <p class="notice" id="disclaimer-static">本页全部信息（天气、景区、酒店、餐厅、门票、价格、营业时间、评分、车程等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道、订票订房平台、地图 App 与景区公告中核实后再决定或前往。</p>
+      <p class="source-line" id="sources"></p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>路线地图</h2>
+          <p class="section-note">主图使用高德路线可视化；文字行程离线可读，地图需要联网。</p>
+        </div>
+      </div>
+      <div class="amap-embed">
+        <iframe id="amap-route-frame" class="amap-frame" title="高德全程路线图" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-tools">
+          <a id="amap-route-link" class="primary-link" target="_blank" rel="noreferrer">在高德打开全程路线</a>
+          <span class="map-caption">高德 Web Service 生成 16 段驾车路线；当天导航以高德 App 实时路况为准。</span>
+        </div>
+      </div>
+      <details class="osm-fallback" id="osm-fallback-details">
+        <summary>展开 OSM 点位备用图</summary>
+        <p>备用图只显示点位顺序和连线，不代表真实驾车道路；展开后才加载 OSM 瓦片。</p>
+        <div id="map"></div>
+      </details>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>每日时间轴</h2>
+          <p class="section-note">上午户外，午后降强度，傍晚再出门。</p>
+        </div>
+      </div>
+      <div id="days"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>全程贴士</h2>
+          <p class="section-note">这几条比多打两个点更值钱。</p>
+        </div>
+      </div>
+      <div class="grid two" id="tips"></div>
+    </section>
+  </main>
+
+  <footer>以后把这个 HTML 发回来，说“把云和改成景宁”或“压成 6 天”，可以直接改内嵌 trip-data 继续迭代。</footer>
+
+  <script id="trip-data" type="application/json">{
+  "title": "金华出发 · 浙江山地避暑自驾 7 天",
+  "startDate": "2026-07-20",
+  "colorScheme": "moss-river-coral",
+  "preTrip": {
+    "weather": {
+      "summary": "7 月下旬浙江中南部多高温、午后雷阵雨，山地早晚体感更舒服；户外尽量放在 8:00-11:00 与 16:30 后。",
+      "typhoon": "7-9 月进入台风影响期，出发前 3 天起关注浙江天气、中央气象台与当地景区公告；强降雨时溪谷、栈道、山路优先取消。"
+    },
+    "packing": "速干衣、轻薄长袖、防晒帽、防滑溯溪鞋或抓地运动鞋、雨衣、驱蚊液、车载充电器；山里早晚可带一件薄外套。",
+    "payment": "省内大多数场景支付宝/微信可用；古村小摊、停车场、农家乐建议备 300-500 元现金。",
+    "apps": [
+      "高德/百度地图",
+      "浙江天气",
+      "交管12123",
+      "12306（备选高铁）",
+      "大众点评/美团（餐厅营业核实）"
+    ],
+    "ticketTip": "高德 POI 当前显示南尖岩景区为“暂停开放”；请在出发前 3-7 天核实官方公告。若未恢复，D6-D7 改为遂昌县城休整 + 神龙谷/金矿国家矿山公园二选一。"
+  },
+  "flights": {
+    "booked": [
+      {
+        "label": "自驾出发",
+        "code": "金华",
+        "time": "建议 09:00 左右出发，避开午后高温与晚高峰"
+      }
+    ],
+    "candidates": [
+      {
+        "label": "全程高德路线可视化",
+        "code": "AMAP",
+        "time": "21 个 POI / 16 段驾车路线",
+        "note": "基于高德 Web Service 生成；打开后可查看各段路线。实际导航仍以出发当天地图 App 为准。",
+        "actionLink": {
+          "label": "打开路线图",
+          "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.647265%2C29.079195%5D%2C%22end%22%3A%5B120.751862%2C29.208172%5D%2C%22remark%22%3A%22%E9%87%91%E5%8D%8E%20%E2%86%92%20%E7%A3%90%E5%AE%89%E5%8D%81%E5%85%AB%E6%B6%A1%EF%BC%8C%E7%BA%A6%20150.2%20%E5%85%AC%E9%87%8C%20%2F%202%E5%B0%8F%E6%97%B624%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.751862%2C29.208172%5D%2C%22end%22%3A%5B120.73679%2C29.237206%5D%2C%22remark%22%3A%22%E5%8D%81%E5%85%AB%E6%B6%A1%20%E2%86%92%20%E4%B9%8C%E7%9F%B3%E6%9D%91%EF%BC%8C%E7%BA%A6%205.7%20%E5%85%AC%E9%87%8C%20%2F%2013%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.73679%2C29.237206%5D%2C%22end%22%3A%5B120.381789%2C28.850483%5D%2C%22remark%22%3A%22%E4%B9%8C%E7%9F%B3%E6%9D%91%20%E2%86%92%20%E7%99%BE%E6%9D%96%E6%BD%AD%EF%BC%8C%E7%BA%A6%2070.2%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B630%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.381789%2C28.850483%5D%2C%22end%22%3A%5B120.091374%2C28.659819%5D%2C%22remark%22%3A%22%E7%99%BE%E6%9D%96%E6%BD%AD%20%E2%86%92%20%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2057.3%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B614%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.091374%2C28.659819%5D%2C%22end%22%3A%5B120.139917%2C28.697727%5D%2C%22remark%22%3A%22%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E4%BB%99%E9%83%BD%E6%9C%B1%E6%BD%AD%E5%B1%B1%EF%BC%8C%E7%BA%A6%2010.5%20%E5%85%AC%E9%87%8C%20%2F%2021%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.143671%2C28.689174%5D%2C%22end%22%3A%5B119.485916%2C28.447107%5D%2C%22remark%22%3A%22%E4%BB%99%E9%83%BD%E9%BC%8E%E6%B9%96%E5%B3%B0%20%E2%86%92%20%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%EF%BC%8C%E7%BA%A6%20123%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B642%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.485916%2C28.447107%5D%2C%22end%22%3A%5B119.513066%2C28.521803%5D%2C%22remark%22%3A%22%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%20%E2%86%92%20%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%EF%BC%8C%E7%BA%A6%2017.6%20%E5%85%AC%E9%87%8C%20%2F%2033%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.513066%2C28.521803%5D%2C%22end%22%3A%5B119.54715%2C28.459542%5D%2C%22remark%22%3A%22%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%20%E2%86%92%20%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%EF%BC%8C%E7%BA%A6%2018.9%20%E5%85%AC%E9%87%8C%20%2F%2040%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.54715%2C28.459542%5D%2C%22end%22%3A%5B119.575335%2C28.448287%5D%2C%22remark%22%3A%22%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%20%E2%86%92%20%E6%9D%BE%E5%BA%84%E6%9D%91%EF%BC%8C%E7%BA%A6%2012%20%E5%85%AC%E9%87%8C%20%2F%2035%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.575335%2C28.448287%5D%2C%22end%22%3A%5B119.487375%2C28.048612%5D%2C%22remark%22%3A%22%E6%9D%BE%E5%BA%84%E6%9D%91%20%E2%86%92%20%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%EF%BC%8C%E7%BA%A6%2091.9%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B646%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.487375%2C28.048612%5D%2C%22end%22%3A%5B119.573454%2C28.116024%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%20%E2%86%92%20%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2012.4%20%E5%85%AC%E9%87%8C%20%2F%2022%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.595979%2C27.80568%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E6%99%AF%E5%AE%81%E5%A4%A7%E6%BC%88%EF%BC%8C%E7%BA%A6%2067.1%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B620%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.275865%2C28.592388%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2095.3%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B620%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.086422%2C28.362427%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E5%8D%97%E5%B0%96%E5%B2%A9%EF%BC%8C%E7%BA%A6%2051.1%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B68%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.086422%2C28.362427%5D%2C%22end%22%3A%5B119.14053%2C28.349052%5D%2C%22remark%22%3A%22%E5%8D%97%E5%B0%96%E5%B2%A9%20%E2%86%92%20%E7%A5%9E%E9%BE%99%E8%B0%B7%EF%BC%8C%E7%BA%A6%2020.2%20%E5%85%AC%E9%87%8C%20%2F%2056%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.647265%2C29.079195%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%87%91%E5%8D%8E%EF%BC%8C%E7%BA%A6%20117.7%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B634%E5%88%86%E9%92%9F%22%7D%5D"
+        }
+      },
+      {
+        "label": "D1 金华 → 磐安",
+        "code": "自驾",
+        "time": "约 2小时24分钟",
+        "note": "高德估算 150.2 公里，过路费约 ¥42；第一天下午只排十八涡，不再加百杖潭。",
+        "actionLink": {
+          "label": "高德路线",
+          "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.647265%2C29.079195%5D%2C%22end%22%3A%5B120.751862%2C29.208172%5D%2C%22remark%22%3A%22%E9%87%91%E5%8D%8E%20%E2%86%92%20%E7%A3%90%E5%AE%89%E5%8D%81%E5%85%AB%E6%B6%A1%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%20150.2%20%E5%85%AC%E9%87%8C%22%7D%5D"
+        }
+      },
+      {
+        "label": "D2 磐安 → 缙云",
+        "code": "自驾",
+        "time": "约 1.5-2 小时",
+        "note": "上午玩水，午后转场，减少暴晒。"
+      },
+      {
+        "label": "D4 松阳古村环线",
+        "code": "自驾",
+        "time": "单段约 33-40 分钟",
+        "note": "高德估算：老街到陈家铺 17.6 公里 / 33分钟；陈家铺到杨家堂 18.9 公里 / 40分钟。山路窄，早到停车。",
+        "actionLink": {
+          "label": "陈家铺路线",
+          "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.485916%2C28.447107%5D%2C%22end%22%3A%5B119.513066%2C28.521803%5D%2C%22remark%22%3A%22%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%20%E2%86%92%20%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2017.6%20%E5%85%AC%E9%87%8C%22%7D%5D"
+        }
+      },
+      {
+        "label": "D6 云和/景宁 → 遂昌",
+        "code": "自驾",
+        "time": "约 1小时20分钟",
+        "note": "高德估算云和县城到遂昌县城 95.3 公里，过路费约 ¥43。若去景宁大漈会多一段山路。",
+        "actionLink": {
+          "label": "高德路线",
+          "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.275865%2C28.592388%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2095.3%20%E5%85%AC%E9%87%8C%22%7D%5D"
+        }
+      }
+    ]
+  },
+  "hotelAreas": [
+    {
+      "area": "磐安尖山 / 乌石村",
+      "reason": "离十八涡、百杖潭等溪谷近，第一晚不用赶夜路，山里早晚更凉。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "磐安清庐民宿(乌石村店)",
+          "priceRange": "约 ¥200/晚起",
+          "note": "距乌石古村仅0.4公里，步行即达，2022年新装修",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/0mWPq7"
+          }
+        },
+        {
+          "tier": "经济",
+          "name": "磐安云上曙光民宿",
+          "priceRange": "约 ¥200/晚起",
+          "note": "尖山镇中心，出行购物方便，房型多样",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/3RwhT5"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "磐安县竹隐石居民宿",
+          "priceRange": "约 ¥350/晚起",
+          "note": "距乌石古村1公里，夏天不用空调，天然避暑",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/2IvpCv"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "磐安县九间天民宿(花筑)",
+          "priceRange": "约 ¥400/晚起",
+          "note": "花筑品牌，中式庭院风格，品质保障",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/38Rtuy"
+          }
+        },
+        {
+          "tier": "高端",
+          "name": "磐安尖山云顶民宿",
+          "priceRange": "约 ¥500/晚起",
+          "note": "2023年新装修，湖景视野好，星空玻璃观景房",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/4CSrBj"
+          }
+        }
+      ]
+    },
+    {
+      "area": "松阳县城 / 四都乡",
+      "reason": "两晚最合适：县城吃饭便利，四都乡更靠近陈家铺、杨家堂，拍照与咖啡体验更完整。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "松阳平田一号客栈",
+          "priceRange": "约 ¥180/晚起",
+          "note": "平田村中心，经济型中客房最多",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/2zxk7s"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "松阳云上平田慢生活精品民宿",
+          "priceRange": "约 ¥450/晚起",
+          "note": "海拔610米，云雾缭绕，配套齐全",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/2RXdt7"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "松阳山耶云耶民宿(陈家铺村)",
+          "priceRange": "约 ¥500/晚起",
+          "note": "2024年新装，紧邻先锋书店，峡谷景观",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/3FKHSa"
+          }
+        },
+        {
+          "tier": "高端",
+          "name": "松阳无心云舍精品民宿",
+          "priceRange": "约 ¥800/晚起",
+          "note": "老供销社改建，正对山谷云雾仙境，仅5间房",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/0ndIkU"
+          }
+        },
+        {
+          "tier": "高端",
+          "name": "山抹微云民宿(松阳陈家铺店)",
+          "priceRange": "约 ¥700/晚起",
+          "note": "紧邻陈家铺村和先锋书店",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/1dJY8N"
+          }
+        }
+      ]
+    },
+    {
+      "area": "云和梯田 / 遂昌南尖岩",
+      "reason": "想看日出云海就住山上；若天气不稳，住县城更稳妥，第二天机动性高。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "云和梯田拾光贰号民宿",
+          "priceRange": "约 ¥200/晚起",
+          "note": "距七星墩观景台0.2公里，看日出方便",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/4Lk6B6"
+          }
+        },
+        {
+          "tier": "经济",
+          "name": "丽水炊烟小筑民宿",
+          "priceRange": "约 ¥250/晚起",
+          "note": "距九曲云环0.3公里，房间可观日出",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/3e5aGf"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "如院小住(云和梯田景区店)",
+          "priceRange": "约 ¥400/晚起",
+          "note": "2025年新装，距梯田仅0.3公里，全屋智能",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/2G9yVG"
+          }
+        },
+        {
+          "tier": "中档",
+          "name": "云和梯田牧云居度假酒店",
+          "priceRange": "约 ¥450/晚起",
+          "note": "海拔700米，面朝梯田背靠竹海",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/0Htt9E"
+          }
+        },
+        {
+          "tier": "高端",
+          "name": "云和云逸的院子别墅",
+          "priceRange": "约 ¥800/晚起",
+          "note": "距九曲云环0.2公里，带泳池别墅式住宿",
+          "actionLink": {
+            "label": "飞猪预订",
+            "url": "https://a.feizhu.com/1nMJX1"
+          }
+        }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（天气、景区、酒店、餐厅、门票、价格、营业时间、评分、车程等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道、订票订房平台、地图 App 与景区公告中核实后再决定或前往。",
+  "dataSources": [
+    {
+      "name": "高德地图 Web Service",
+      "scope": "POI 坐标、地点状态、驾车距离与耗时、路线可视化链接",
+      "realtime": true
+    },
+    {
+      "name": "公开资料静态整理",
+      "scope": "行程节奏、住宿片区、餐饮、票务提醒、季节避暑逻辑",
+      "realtime": false
+    },
+    {
+      "name": "Wikimedia Commons",
+      "scope": "缙云仙都示意图片",
+      "realtime": false
+    },
+    {
+      "name": "飞猪 flyai",
+      "scope": "酒店实时价格及预订链接",
+      "realtime": true
+    }
+  ],
+  "tips": [
+    "高德 POI 当前标记南尖岩景区“暂停开放”：这不是小细节，出发前必须复核；未恢复就切换神龙谷/遂昌县城休整。",
+    "D2 百杖潭不是顺路小点：乌石村到百杖潭高德约 70 公里 / 1小时30分钟，想轻松就跳过。",
+    "山地民宿停车位有限，订房时确认停车、早餐、是否需要爬坡搬行李。",
+    "无人机、露营、溯溪下水等都要看当地规定，不确定就先问民宿或景区。"
+  ],
+  "reminders": [
+    {
+      "item": "核实南尖岩景区是否恢复开放，并准备神龙谷备选",
+      "leadDays": 7
+    },
+    {
+      "item": "锁定松阳四都乡 / 陈家铺附近住宿",
+      "leadDays": 14
+    },
+    {
+      "item": "检查车辆胎压、雨刮、玻璃水和山路导航离线包",
+      "leadDays": 3
+    },
+    {
+      "item": "根据天气决定云和梯田或景宁大漈二选一",
+      "leadDays": 2
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-07-20",
+      "weekday": "周一",
+      "theme": "金华出发 · 进山降温",
+      "tips": [
+        "第一天别贪多，下午溪谷玩水，晚上早睡。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "金华市区出发",
+          "time": "09:00",
+          "lat": 29.082171,
+          "lng": 119.64256,
+          "photo": "https://img.alicdn.com/tfscom/TB1UTOkeTvI8KJjSspjSuwgjXXa",
+          "rating": 4.5,
+          "review": "从金华出发走浙中山地线，不绕远，适合自驾避暑。高德 POI：金华市人民政府。",
+          "openingHours": "自驾出发点",
+          "ticketPrice": "高速与停车费按实际为准",
+          "transport": {
+            "mode": "自驾",
+            "fare": "油费/高速约按实际",
+            "duration": "到磐安约 1.5-2 小时"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "金华市人民政府",
+            "address": "双龙南街801号市政府主楼8层、13层",
+            "gcj02": "119.647265,29.079195",
+            "wgs84": "119.64256,29.082171"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "磐安十八涡",
+          "time": "13:30-16:30",
+          "lat": 29.210894,
+          "lng": 120.747664,
+          "photo": "https://img.alicdn.com/imgextra/i3/O1CN0121xrcEK1L23Dw2u_!!0-travel.jpg",
+          "rating": 4.4,
+          "review": "峡谷、瀑潭、栈道组合，适合把第一天的热气降下来。高德 POI：十八涡景区。",
+          "openingHours": "通常日间开放，出发前以景区公告为准",
+          "ticketPrice": "参考约 ¥50-70，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 150.2 公里，过路费约 ¥42",
+            "duration": "高德驾车约 2小时24分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.647265%2C29.079195%5D%2C%22end%22%3A%5B120.751862%2C29.208172%5D%2C%22remark%22%3A%22%E9%87%91%E5%8D%8E%20%E2%86%92%20%E7%A3%90%E5%AE%89%E5%8D%81%E5%85%AB%E6%B6%A1%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%20150.2%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "seasonal": "暑期溪谷亲水体验，但强降雨后可能临时管控。",
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "十八涡景区",
+            "address": "尖山镇",
+            "gcj02": "120.751862,29.208172",
+            "wgs84": "120.747664,29.210894"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "乌石村 / 尖山镇民宿",
+          "time": "18:00-20:30",
+          "lat": 29.23991,
+          "lng": 120.732593,
+          "photo": "https://img.alicdn.com/tfscom/TB1bOexe8fH8KJjy1XbSuvLdXXa",
+          "rating": 4.3,
+          "review": "黑瓦石墙村落和山间晚风，适合第一晚慢下来。高德 POI：乌石古村。",
+          "openingHours": "村落全天，民宿入住按预订",
+          "ticketPrice": "村落免费，住宿另计",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 5.7 公里",
+            "duration": "高德驾车约 13分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.751862%2C29.208172%5D%2C%22end%22%3A%5B120.73679%2C29.237206%5D%2C%22remark%22%3A%22%E5%8D%81%E5%85%AB%E6%B6%A1%20%E2%86%92%20%E4%B9%8C%E7%9F%B3%E6%9D%91%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%205.7%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "amapPoi": {
+            "name": "乌石古村",
+            "address": "乌石村",
+            "gcj02": "120.736790,29.237206",
+            "wgs84": "120.732593,29.23991"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "晚餐",
+          "place": "磐安农家菜",
+          "hours": "常见 17:00-20:30，按店铺为准",
+          "dishes": [
+            {
+              "name": "土鸡煲",
+              "price": "约 ¥88-168"
+            },
+            {
+              "name": "笋干烧肉",
+              "price": "约 ¥48-78"
+            },
+            {
+              "name": "玉米饼/麦饼",
+              "price": "约 ¥8-18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "weekday": "周二",
+      "theme": "磐安溪谷二选一 · 午后转场缙云",
+      "tips": [
+        "高德测出乌石村到百杖潭约 70 公里 / 1小时30分钟；想轻松就跳过百杖潭，直接去缙云。"
+      ],
+      "alternatives": [
+        {
+          "label": "轻松方案",
+          "summary": "乌石村早餐后直接去缙云县城，下午休息，傍晚吃缙云烧饼和土面。"
+        },
+        {
+          "label": "强度方案",
+          "summary": "上午百杖潭，午后去缙云；全天车程明显增加，适合体力好且天气稳定时。"
+        }
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "磐安百杖潭",
+          "time": "08:30-11:30",
+          "lat": 28.853317,
+          "lng": 120.377312,
+          "photo": "https://img.alicdn.com/imgextra/i4/6000000003537/O1CN018y64Iz1bzzTzHmUOs_!!6000000003537-0-fliggyimage.jpg",
+          "rating": 4.4,
+          "review": "瀑布和潭水更集中，适合年轻人轻徒步，但雨天要保守。高德 POI：金华市磐安县百杖潭景区。",
+          "openingHours": "通常日间开放，雨季以景区公告为准",
+          "ticketPrice": "参考约 ¥50-70，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 70.2 公里",
+            "duration": "高德驾车约 1小时30分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.73679%2C29.237206%5D%2C%22end%22%3A%5B120.381789%2C28.850483%5D%2C%22remark%22%3A%22%E4%B9%8C%E7%9F%B3%E6%9D%91%20%E2%86%92%20%E7%99%BE%E6%9D%96%E6%BD%AD%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2070.2%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "金华市磐安县百杖潭景区",
+            "address": "冷沙线仁川镇石下村往南",
+            "gcj02": "120.381789,28.850483",
+            "wgs84": "120.377312,28.853317"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "磐安县城午餐与补给",
+          "time": "12:30-14:00",
+          "lat": 29.057203,
+          "lng": 120.445527,
+          "photo": "https://img.alicdn.com/imgextra/i4/6000000003537/O1CN018y64Iz1bzzTzHmUOs_!!6000000003537-0-fliggyimage.jpg",
+          "rating": 4.2,
+          "review": "补水、买零食、短休，比连续山路更舒服。高德 POI：磐安县人民政府。",
+          "openingHours": "商户各异",
+          "ticketPrice": "按消费",
+          "transport": {
+            "mode": "自驾",
+            "fare": "停车费按现场",
+            "duration": "百杖潭到县城约 40-60 分钟"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "磐安县人民政府",
+            "address": "龙山路1号",
+            "gcj02": "120.449937,29.054491",
+            "wgs84": "120.445527,29.057203"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "缙云县城",
+          "time": "17:00-21:00",
+          "lat": 28.662777,
+          "lng": 120.086692,
+          "photo": "https://img.alicdn.com/tfscom/TB1HNIZeNTI8KJjSspiSuvM4FXa",
+          "rating": 4.3,
+          "review": "为第二天仙都留足体力，晚上适合吃烧饼和土面。高德 POI：缙云县人民政府。",
+          "openingHours": "城市全天",
+          "ticketPrice": "住宿与餐饮另计",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 57.3 公里",
+            "duration": "高德驾车约 1小时14分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.381789%2C28.850483%5D%2C%22end%22%3A%5B120.091374%2C28.659819%5D%2C%22remark%22%3A%22%E7%99%BE%E6%9D%96%E6%BD%AD%20%E2%86%92%20%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2057.3%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "amapPoi": {
+            "name": "缙云县人民政府",
+            "address": "永宁步行街与黄龙路交叉口北150米",
+            "gcj02": "120.091374,28.659819",
+            "wgs84": "120.086692,28.662777"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "磐安县城小吃",
+          "hours": "约 10:30-14:00",
+          "dishes": [
+            {
+              "name": "磐安拉面",
+              "price": "约 ¥18-35"
+            },
+            {
+              "name": "水煮溪鱼",
+              "price": "约 ¥58-98"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "缙云县城烧饼店/土菜馆",
+          "hours": "约 17:00-21:00",
+          "dishes": [
+            {
+              "name": "缙云烧饼",
+              "price": "约 ¥5-10"
+            },
+            {
+              "name": "缙云土爽面",
+              "price": "约 ¥18-35"
+            },
+            {
+              "name": "敲肉羹",
+              "price": "约 ¥25-45"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-22",
+      "weekday": "周三",
+      "theme": "缙云仙都 · 石峰与溪水",
+      "tips": [
+        "仙都拍照建议早到；午后离开景区去松阳，避免晒在开阔河滩。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "仙都朱潭山",
+          "time": "07:30-09:30",
+          "lat": 28.700695,
+          "lng": 120.13531,
+          "photo": "https://img.alicdn.com/tfscom/TB1pjyveH_I8KJjy1XaSuvsxpXa",
+          "rating": 4.6,
+          "review": "经典机位，溪流、石峰、晨雾组合很出片。高德 POI：朱潭山。",
+          "openingHours": "通常日间开放，具体以仙都景区公告为准",
+          "ticketPrice": "仙都联票参考约 ¥90-120，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 10.5 公里",
+            "duration": "高德驾车约 21分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.091374%2C28.659819%5D%2C%22end%22%3A%5B120.139917%2C28.697727%5D%2C%22remark%22%3A%22%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E4%BB%99%E9%83%BD%E6%9C%B1%E6%BD%AD%E5%B1%B1%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2010.5%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "seasonal": "夏季清晨更容易避开高温，也更适合拍照。",
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "朱潭山",
+            "address": "仙都街道仙都街道仙都景区内",
+            "gcj02": "120.139917,28.697727",
+            "wgs84": "120.13531,28.700695"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "仙都鼎湖峰",
+          "time": "09:50-12:00",
+          "lat": 28.692153,
+          "lng": 120.139075,
+          "photo": "https://img.alicdn.com/tfscom/TB1FFyfeInI8KJjSsziSuv8QpXa",
+          "rating": 4.6,
+          "review": "仙都核心景观，适合和朱潭山连着走。高德 POI：鼎湖峰。",
+          "openingHours": "通常日间开放，具体以景区公告为准",
+          "ticketPrice": "含在仙都景区票务中，非实时",
+          "transport": {
+            "mode": "景区交通/步行",
+            "fare": "按现场",
+            "duration": "朱潭山到鼎湖峰约 10-20 分钟"
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "鼎湖峰",
+            "address": "仙都鼎湖峰村口",
+            "gcj02": "120.143671,28.689174",
+            "wgs84": "120.139075,28.692153"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "松阳老街",
+          "time": "17:30-21:00",
+          "lat": 28.450307,
+          "lng": 119.480974,
+          "photo": "https://img.alicdn.com/imgextra/i1/O1CN01oNrZmV1RJiiPWyXM0_!!0-alitrip.jpg",
+          "rating": 4.5,
+          "review": "烟火气很足，适合把晚餐和夜逛都解决。高德 POI：南直老街。",
+          "openingHours": "街区全天，店铺营业各异",
+          "ticketPrice": "免费",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 123 公里，过路费约 ¥51",
+            "duration": "高德驾车约 1小时42分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.143671%2C28.689174%5D%2C%22end%22%3A%5B119.485916%2C28.447107%5D%2C%22remark%22%3A%22%E4%BB%99%E9%83%BD%E9%BC%8E%E6%B9%96%E5%B3%B0%20%E2%86%92%20%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%20123.0%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "南直老街",
+            "address": "新华路与官塘路交叉口东160米",
+            "gcj02": "119.485916,28.447107",
+            "wgs84": "119.480974,28.450307"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "仙都景区周边农家乐",
+          "hours": "约 11:00-14:00",
+          "dishes": [
+            {
+              "name": "缙云麻鸭",
+              "price": "约 ¥88-168"
+            },
+            {
+              "name": "土面",
+              "price": "约 ¥18-35"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "松阳老街小吃",
+          "hours": "约 17:00-21:30",
+          "dishes": [
+            {
+              "name": "松阳薄饼",
+              "price": "约 ¥8-18"
+            },
+            {
+              "name": "山粉饺",
+              "price": "约 ¥15-28"
+            },
+            {
+              "name": "煨盐鸡",
+              "price": "约 ¥58-128"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "weekday": "周四",
+      "theme": "松阳古村 · 咖啡、书店和山风",
+      "tips": [
+        "这天不要赶路，两个年轻人拍照和发呆的价值比多打卡更高。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "陈家铺村",
+          "time": "08:30-11:30",
+          "lat": 28.525059,
+          "lng": 119.508222,
+          "photo": "http://n.sinaimg.cn/default/1_img/upload/3933d981/698/w899h599/20200810/1ea1-ixreehn5663403.jpg",
+          "rating": 4.6,
+          "review": "悬崖古村、书店、咖啡和山谷视野，是松阳最适合慢逛的一站。高德 POI：先锋书店(陈家铺平民书局)。",
+          "openingHours": "村落全天，书店/咖啡店营业各异",
+          "ticketPrice": "村落免费，消费另计",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 17.6 公里",
+            "duration": "高德驾车约 33分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.485916%2C28.447107%5D%2C%22end%22%3A%5B119.513066%2C28.521803%5D%2C%22remark%22%3A%22%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%20%E2%86%92%20%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2017.6%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "seasonal": "夏季上午光线好，午后容易闷热或雷阵雨。",
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "先锋书店(陈家铺平民书局)",
+            "address": "四都乡陈家铺村",
+            "gcj02": "119.513066,28.521803",
+            "wgs84": "119.508222,28.525059"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "先锋书店陈家铺平民书局",
+          "time": "11:30-14:00",
+          "lat": 28.525059,
+          "lng": 119.508222,
+          "photo": "https://img.alicdn.com/imgextra/i4/6000000008117/O1CN0183Wace29pdaEl5JrA_!!6000000008117-2-fliggyimage.png",
+          "rating": 4.6,
+          "review": "午后避晒点，适合坐下来喝东西、整理照片。高德 POI：先锋书店(陈家铺平民书局)。",
+          "openingHours": "营业时间以店铺当天公告为准",
+          "ticketPrice": "免费入内，饮品/图书另计",
+          "transport": {
+            "mode": "步行",
+            "fare": "免费",
+            "duration": "村内步行"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "先锋书店(陈家铺平民书局)",
+            "address": "四都乡陈家铺村",
+            "gcj02": "119.513066,28.521803",
+            "wgs84": "119.508222,28.525059"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "杨家堂村",
+          "time": "16:30-18:30",
+          "lat": 28.462908,
+          "lng": 119.542427,
+          "photo": "http://n.sinaimg.cn/default/1_img/upload/3933d981/699/w899h600/20200810/8465-ixreehn5663660.jpg",
+          "rating": 4.5,
+          "review": "黄墙古民居和台地村落，傍晚光线更柔和。高德 POI：松阳杨家堂乡宿。",
+          "openingHours": "村落全天",
+          "ticketPrice": "通常免费，停车按现场",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 18.9 公里",
+            "duration": "高德驾车约 40分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.513066%2C28.521803%5D%2C%22end%22%3A%5B119.54715%2C28.459542%5D%2C%22remark%22%3A%22%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%20%E2%86%92%20%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2018.9%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "松阳杨家堂乡宿",
+            "address": "杨家堂20号",
+            "gcj02": "119.547150,28.459542",
+            "wgs84": "119.542427,28.462908"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "陈家铺村咖啡/简餐",
+          "hours": "约 10:00-18:00，按店铺为准",
+          "dishes": [
+            {
+              "name": "手冲/拿铁",
+              "price": "约 ¥28-45"
+            },
+            {
+              "name": "简餐/甜点",
+              "price": "约 ¥35-68"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "松阳县城土菜馆",
+          "hours": "约 17:00-21:00",
+          "dishes": [
+            {
+              "name": "松阳煨盐鸡",
+              "price": "约 ¥68-128"
+            },
+            {
+              "name": "酒糟溪鱼",
+              "price": "约 ¥58-108"
+            },
+            {
+              "name": "笋干青菜",
+              "price": "约 ¥28-48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "weekday": "周五",
+      "theme": "云和梯田 / 景宁大漈二选一",
+      "tips": [
+        "这天按天气选：晴或多云去云和梯田，雨后雾气重可去景宁大漈；暴雨则住县城休整。"
+      ],
+      "alternatives": [
+        {
+          "label": "方案 A 云和梯田",
+          "summary": "梯田、山村、日落，画面更开阔；适合天气清透时。"
+        },
+        {
+          "label": "方案 B 景宁大漈",
+          "summary": "更山地、更小众，适合想要清凉古村和瀑布感。"
+        }
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "松庄村",
+          "time": "08:30-10:30",
+          "lat": 28.451701,
+          "lng": 119.570679,
+          "photo": "http://n.sinaimg.cn/default/1_img/upload/3933d981/698/w899h599/20200810/58e0-ixreehn5663632.jpg",
+          "rating": 4.4,
+          "review": "比陈家铺安静，适合补一个古村清晨。高德 POI：松庄村村民委员会。",
+          "openingHours": "村落全天",
+          "ticketPrice": "通常免费",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 12 公里",
+            "duration": "高德驾车约 35分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.54715%2C28.459542%5D%2C%22end%22%3A%5B119.575335%2C28.448287%5D%2C%22remark%22%3A%22%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%20%E2%86%92%20%E6%9D%BE%E5%BA%84%E6%9D%91%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2012.0%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "松庄村村民委员会",
+            "address": "三都乡",
+            "gcj02": "119.575335,28.448287",
+            "wgs84": "119.570679,28.451701"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "云和梯田景区",
+          "time": "14:30-18:30",
+          "lat": 28.051834,
+          "lng": 119.482471,
+          "photo": "https://img.alicdn.com/imgextra/i2/6000000002154/O1CN017vnYYf1RmZs8Pov6I_!!6000000002154-0-fliggyimage.jpg",
+          "rating": 4.5,
+          "review": "山地梯田和云雾层次感强，适合把行程从古村切到大景观。高德 POI：云和梯田景区。",
+          "openingHours": "通常日间开放，日出点需按景区规则",
+          "ticketPrice": "参考约 ¥70-100，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 91.9 公里，过路费约 ¥33",
+            "duration": "高德驾车约 1小时46分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.575335%2C28.448287%5D%2C%22end%22%3A%5B119.487375%2C28.048612%5D%2C%22remark%22%3A%22%E6%9D%BE%E5%BA%84%E6%9D%91%20%E2%86%92%20%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2091.9%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "seasonal": "夏季午后可能雷阵雨，建议看雷达回波再上山。",
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "云和梯田景区",
+            "address": "崇头镇梅源村云和梯田景区游客中心1号",
+            "gcj02": "119.487375,28.048612",
+            "wgs84": "119.482471,28.051834"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "云和县城",
+          "time": "19:30-21:00",
+          "lat": 28.119462,
+          "lng": 119.568821,
+          "photo": "https://img.alicdn.com/tfscom/TB1UP78fRfH8KJjy1XbSuvLdXXa",
+          "rating": 4.2,
+          "review": "住县城补给更稳，也方便第二天去遂昌。高德 POI：云和县人民政府。",
+          "openingHours": "城市全天",
+          "ticketPrice": "住宿与餐饮另计",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 12.4 公里",
+            "duration": "高德驾车约 22分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.487375%2C28.048612%5D%2C%22end%22%3A%5B119.573454%2C28.116024%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%20%E2%86%92%20%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2012.4%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "amapPoi": {
+            "name": "云和县人民政府",
+            "address": "城北路6号",
+            "gcj02": "119.573454,28.116024",
+            "wgs84": "119.568821,28.119462"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "松阳或云和路上简餐",
+          "hours": "约 11:00-14:00",
+          "dishes": [
+            {
+              "name": "山粉饺/炒粉干",
+              "price": "约 ¥18-35"
+            },
+            {
+              "name": "农家小炒",
+              "price": "约 ¥28-58"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "云和县城土菜馆",
+          "hours": "约 17:00-21:00",
+          "dishes": [
+            {
+              "name": "云和湖鱼",
+              "price": "约 ¥68-138"
+            },
+            {
+              "name": "高山蔬菜",
+              "price": "约 ¥28-48"
+            },
+            {
+              "name": "豆腐煲",
+              "price": "约 ¥38-68"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "周六",
+      "theme": "遂昌双保险 · 南尖岩开放才上山",
+      "tips": [
+        "南尖岩若仍暂停开放，就不要上山扑空；改住遂昌县城，第二天神龙谷或轻松返程。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "景宁大漈备选",
+          "time": "08:30-11:30",
+          "lat": 27.809086,
+          "lng": 119.591397,
+          "photo": "https://img.alicdn.com/i1/154620271589120495/TB26wjVaanyQeBjSspeXXa8WpXa_!!0-travel.jpg",
+          "rating": 4.4,
+          "review": "瀑布、古村和山地气候，适合作为云和梯田之外的清凉备选。高德 POI：景宁云中大漈景区。",
+          "openingHours": "村落/景区以当地公告为准",
+          "ticketPrice": "按现场，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 67.1 公里，过路费约 ¥37",
+            "duration": "高德驾车约 1小时20分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.595979%2C27.80568%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E6%99%AF%E5%AE%81%E5%A4%A7%E6%BC%88%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2067.1%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "景宁云中大漈景区",
+            "address": "大漈乡大漈村",
+            "gcj02": "119.595979,27.805680",
+            "wgs84": "119.591397,27.809086"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "遂昌县城补给",
+          "time": "13:30-15:00",
+          "lat": 28.595564,
+          "lng": 119.270894,
+          "photo": "https://img.alicdn.com/imgextra/i3/O1CN011LCUn5nW3cPliX1_!!0-travel.jpg",
+          "rating": 4.2,
+          "review": "上南尖岩前补油、买水、看天气，是稳妥节点。高德 POI：遂昌县人民政府。",
+          "openingHours": "城市全天",
+          "ticketPrice": "按消费",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 95.3 公里，过路费约 ¥43",
+            "duration": "高德驾车约 1小时20分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.275865%2C28.592388%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2095.3%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "遂昌县人民政府",
+            "address": "县前街1号",
+            "gcj02": "119.275865,28.592388",
+            "wgs84": "119.270894,28.595564"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "南尖岩景区附近（开放状态待核实）",
+          "time": "16:30-19:00",
+          "lat": 28.365511,
+          "lng": 119.081277,
+          "photo": "https://img.alicdn.com/tfscom/TB1FCSlifDH8KJjy1XcSuwpdXXa",
+          "rating": 4.5,
+          "review": "云海、梯田和山崖栈道仍是强景观点，但当前高德 POI 标记暂停开放，建议作为“恢复开放才去”的备选。",
+          "openingHours": "高德 POI 当前标记“暂停开放”；务必以景区官方公告为准",
+          "ticketPrice": "暂停开放时不可购票；恢复后以官方票价为准",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 51.1 公里",
+            "duration": "高德驾车约 1小时8分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.086422%2C28.362427%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E5%8D%97%E5%B0%96%E5%B2%A9%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2051.1%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "seasonal": "清晨更可能看到云海，前一晚住近一点更轻松。",
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "南尖岩景区(暂停开放)",
+            "address": "石笋头村60号",
+            "gcj02": "119.086422,28.362427",
+            "wgs84": "119.081277,28.365511"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "遂昌县城简餐",
+          "hours": "约 11:00-14:00",
+          "dishes": [
+            {
+              "name": "遂昌风炉宴小份菜",
+              "price": "约 ¥48-98"
+            },
+            {
+              "name": "炒粉干",
+              "price": "约 ¥18-35"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "南尖岩民宿晚餐",
+          "hours": "通常需提前和民宿确认",
+          "dishes": [
+            {
+              "name": "土鸡汤",
+              "price": "约 ¥98-188"
+            },
+            {
+              "name": "高山蔬菜",
+              "price": "约 ¥28-48"
+            },
+            {
+              "name": "笋干肉",
+              "price": "约 ¥48-78"
+            }
+          ]
+        }
+      ],
+      "alternatives": [
+        {
+          "label": "方案 A 南尖岩恢复开放",
+          "summary": "遂昌县城补给后上山住景区附近，清晨看云海。"
+        },
+        {
+          "label": "方案 B 南尖岩未恢复",
+          "summary": "住遂昌县城，晚餐吃风炉宴，D7 去神龙谷或直接返金华。"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "weekday": "周日",
+      "theme": "按开放状态收尾 · 神龙谷或返程",
+      "tips": [
+        "如果南尖岩关闭，D7 不早起上山，改神龙谷半日或直接返金华，最后一天别疲劳驾驶。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "南尖岩日出 / 云海（开放状态待核实）",
+          "time": "05:30-09:30",
+          "lat": 28.365511,
+          "lng": 119.081277,
+          "photo": "http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1406/11/c4/35169035_35169035_1402468393184.jpg",
+          "rating": 4.5,
+          "review": "云海、梯田和山崖栈道仍是强景观点，但当前高德 POI 标记暂停开放，建议作为“恢复开放才去”的备选。",
+          "openingHours": "高德 POI 当前标记“暂停开放”；务必以景区官方公告为准",
+          "ticketPrice": "暂停开放时不可购票；恢复后以官方票价为准",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 51.1 公里",
+            "duration": "高德驾车约 1小时8分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.086422%2C28.362427%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E5%8D%97%E5%B0%96%E5%B2%A9%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2051.1%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "amapPoi": {
+            "name": "南尖岩景区(暂停开放)",
+            "address": "石笋头村60号",
+            "gcj02": "119.086422,28.362427",
+            "wgs84": "119.081277,28.365511"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "遂昌神龙谷备选",
+          "time": "10:30-12:30",
+          "lat": 28.35217,
+          "lng": 119.13542,
+          "photo": "https://img.alicdn.com/imgextra/i1/O1CN015UILXT25yYc56x2zI_!!0-alitrip.jpg",
+          "rating": 4.3,
+          "review": "如果体力和天气都好，可补一个森林瀑布；否则直接午饭返程。高德 POI：遂昌神龙谷景区。",
+          "openingHours": "通常日间开放，以景区公告为准",
+          "ticketPrice": "参考约 ¥60-90，非实时",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 20.2 公里",
+            "duration": "高德驾车约 56分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.086422%2C28.362427%5D%2C%22end%22%3A%5B119.14053%2C28.349052%5D%2C%22remark%22%3A%22%E5%8D%97%E5%B0%96%E5%B2%A9%20%E2%86%92%20%E7%A5%9E%E9%BE%99%E8%B0%B7%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%2020.2%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "遂昌神龙谷景区",
+            "address": "桂王线(神龙谷景区)",
+            "gcj02": "119.140530,28.349052",
+            "wgs84": "119.13542,28.35217"
+          }
+        },
+        {
+          "period": "evening",
+          "name": "返程金华",
+          "time": "14:00-18:00",
+          "lat": 29.082171,
+          "lng": 119.64256,
+          "photo": "https://img.alicdn.com/imgextra/i1/TB28_YibhnaK1RjSZFtXXbC2VXa_!!0-alitrip.jpg",
+          "rating": 4.5,
+          "review": "午后返程，别把最后一天开成疲劳驾驶。高德 POI：金华市人民政府。",
+          "openingHours": "自驾返程",
+          "ticketPrice": "高速与油费按实际",
+          "transport": {
+            "mode": "自驾",
+            "fare": "高德估算 117.7 公里，过路费约 ¥49",
+            "duration": "高德驾车约 1小时34分钟",
+            "actionLink": {
+              "label": "高德路线",
+              "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.647265%2C29.079195%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%87%91%E5%8D%8E%EF%BC%8C%E8%B7%9D%E7%A6%BB%E7%BA%A6%20117.7%20%E5%85%AC%E9%87%8C%22%7D%5D"
+            }
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "amapPoi": {
+            "name": "金华市人民政府",
+            "address": "双龙南街801号市政府主楼8层、13层",
+            "gcj02": "119.647265,29.079195",
+            "wgs84": "119.64256,29.082171"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早餐",
+          "place": "南尖岩民宿早餐",
+          "hours": "通常 07:00-09:00，需前晚确认",
+          "dishes": [
+            {
+              "name": "白粥小菜",
+              "price": "多含早"
+            },
+            {
+              "name": "土鸡蛋/馒头",
+              "price": "约 ¥5-15"
+            }
+          ]
+        },
+        {
+          "meal": "午餐",
+          "place": "遂昌县城返程前午餐",
+          "hours": "约 11:00-14:00",
+          "dishes": [
+            {
+              "name": "土菜小炒",
+              "price": "约 ¥30-68"
+            },
+            {
+              "name": "溪鱼",
+              "price": "约 ¥58-128"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routeMap": {
+    "provider": "高德地图 Web Service",
+    "label": "打开路线图",
+    "url": "https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.647265%2C29.079195%5D%2C%22end%22%3A%5B120.751862%2C29.208172%5D%2C%22remark%22%3A%22%E9%87%91%E5%8D%8E%20%E2%86%92%20%E7%A3%90%E5%AE%89%E5%8D%81%E5%85%AB%E6%B6%A1%EF%BC%8C%E7%BA%A6%20150.2%20%E5%85%AC%E9%87%8C%20%2F%202%E5%B0%8F%E6%97%B624%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.751862%2C29.208172%5D%2C%22end%22%3A%5B120.73679%2C29.237206%5D%2C%22remark%22%3A%22%E5%8D%81%E5%85%AB%E6%B6%A1%20%E2%86%92%20%E4%B9%8C%E7%9F%B3%E6%9D%91%EF%BC%8C%E7%BA%A6%205.7%20%E5%85%AC%E9%87%8C%20%2F%2013%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.73679%2C29.237206%5D%2C%22end%22%3A%5B120.381789%2C28.850483%5D%2C%22remark%22%3A%22%E4%B9%8C%E7%9F%B3%E6%9D%91%20%E2%86%92%20%E7%99%BE%E6%9D%96%E6%BD%AD%EF%BC%8C%E7%BA%A6%2070.2%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B630%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.381789%2C28.850483%5D%2C%22end%22%3A%5B120.091374%2C28.659819%5D%2C%22remark%22%3A%22%E7%99%BE%E6%9D%96%E6%BD%AD%20%E2%86%92%20%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2057.3%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B614%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.091374%2C28.659819%5D%2C%22end%22%3A%5B120.139917%2C28.697727%5D%2C%22remark%22%3A%22%E7%BC%99%E4%BA%91%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E4%BB%99%E9%83%BD%E6%9C%B1%E6%BD%AD%E5%B1%B1%EF%BC%8C%E7%BA%A6%2010.5%20%E5%85%AC%E9%87%8C%20%2F%2021%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B120.143671%2C28.689174%5D%2C%22end%22%3A%5B119.485916%2C28.447107%5D%2C%22remark%22%3A%22%E4%BB%99%E9%83%BD%E9%BC%8E%E6%B9%96%E5%B3%B0%20%E2%86%92%20%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%EF%BC%8C%E7%BA%A6%20123%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B642%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.485916%2C28.447107%5D%2C%22end%22%3A%5B119.513066%2C28.521803%5D%2C%22remark%22%3A%22%E6%9D%BE%E9%98%B3%E8%80%81%E8%A1%97%20%E2%86%92%20%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%EF%BC%8C%E7%BA%A6%2017.6%20%E5%85%AC%E9%87%8C%20%2F%2033%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.513066%2C28.521803%5D%2C%22end%22%3A%5B119.54715%2C28.459542%5D%2C%22remark%22%3A%22%E9%99%88%E5%AE%B6%E9%93%BA%E6%9D%91%20%E2%86%92%20%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%EF%BC%8C%E7%BA%A6%2018.9%20%E5%85%AC%E9%87%8C%20%2F%2040%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.54715%2C28.459542%5D%2C%22end%22%3A%5B119.575335%2C28.448287%5D%2C%22remark%22%3A%22%E6%9D%A8%E5%AE%B6%E5%A0%82%E6%9D%91%20%E2%86%92%20%E6%9D%BE%E5%BA%84%E6%9D%91%EF%BC%8C%E7%BA%A6%2012%20%E5%85%AC%E9%87%8C%20%2F%2035%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.575335%2C28.448287%5D%2C%22end%22%3A%5B119.487375%2C28.048612%5D%2C%22remark%22%3A%22%E6%9D%BE%E5%BA%84%E6%9D%91%20%E2%86%92%20%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%EF%BC%8C%E7%BA%A6%2091.9%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B646%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.487375%2C28.048612%5D%2C%22end%22%3A%5B119.573454%2C28.116024%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0%20%E2%86%92%20%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2012.4%20%E5%85%AC%E9%87%8C%20%2F%2022%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.595979%2C27.80568%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E6%99%AF%E5%AE%81%E5%A4%A7%E6%BC%88%EF%BC%8C%E7%BA%A6%2067.1%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B620%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.573454%2C28.116024%5D%2C%22end%22%3A%5B119.275865%2C28.592388%5D%2C%22remark%22%3A%22%E4%BA%91%E5%92%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%EF%BC%8C%E7%BA%A6%2095.3%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B620%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.086422%2C28.362427%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E5%8D%97%E5%B0%96%E5%B2%A9%EF%BC%8C%E7%BA%A6%2051.1%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B68%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.086422%2C28.362427%5D%2C%22end%22%3A%5B119.14053%2C28.349052%5D%2C%22remark%22%3A%22%E5%8D%97%E5%B0%96%E5%B2%A9%20%E2%86%92%20%E7%A5%9E%E9%BE%99%E8%B0%B7%EF%BC%8C%E7%BA%A6%2020.2%20%E5%85%AC%E9%87%8C%20%2F%2056%E5%88%86%E9%92%9F%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B119.275865%2C28.592388%5D%2C%22end%22%3A%5B119.647265%2C29.079195%5D%2C%22remark%22%3A%22%E9%81%82%E6%98%8C%E5%8E%BF%E5%9F%8E%20%E2%86%92%20%E9%87%91%E5%8D%8E%EF%BC%8C%E7%BA%A6%20117.7%20%E5%85%AC%E9%87%8C%20%2F%201%E5%B0%8F%E6%97%B634%E5%88%86%E9%92%9F%22%7D%5D",
+    "note": "16 段驾车路线；当天导航以地图 App 实时路况为准"
+  }
+}</script>
+  <script>
+// Leaflet 地图引擎。纯函数（buildNavLink/routeCoordinates/gcj02ToWgs84）可单元测试；
+// initTravelMap 需浏览器 + Leaflet (L)。浏览器与 Node 双用。
+
+// HTML 转义，防止 XSS
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 生成跳转手机地图导航的链接。
+// iOS 不识别 geo: scheme，用 Apple Maps 的 https 通用链接；其余平台用 geo:。
+// ua 可选（浏览器里传 navigator.userAgent），不传则回退 geo:。
+function buildNavLink(lat, lng, label, ua) {
+  if (ua && /iPhone|iPad|iPod/.test(ua)) {
+    return 'https://maps.apple.com/?ll=' + lat + ',' + lng + '&q=' + encodeURIComponent(label);
+  }
+  return 'geo:' + lat + ',' + lng + '?q=' + lat + ',' + lng + '(' + encodeURIComponent(label) + ')';
+}
+
+// —— GCJ-02 → WGS-84 坐标转换 ——
+// 高德/腾讯地图返回的坐标是 GCJ-02（国测局加密），直接画在 OSM（WGS-84）瓦片上
+// 会偏移一百到几百米。凡坐标来自高德/腾讯类 skill，必须先经此函数转换。
+// 中国境外坐标原样返回（GCJ-02 仅在境内加偏）。
+var GCJ_A = 6378245.0;
+var GCJ_EE = 0.00669342162296594323;
+
+function isInChinaBBox(lat, lng) {
+  return lng >= 72.004 && lng <= 137.8347 && lat >= 0.8293 && lat <= 55.8271;
+}
+
+function gcjTransformLat(x, y) {
+  var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320.0 * Math.sin(y * Math.PI / 30.0)) * 2.0 / 3.0;
+  return ret;
+}
+
+function gcjTransformLng(x, y) {
+  var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(x * Math.PI) + 40.0 * Math.sin(x / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
+  return ret;
+}
+
+function gcj02ToWgs84(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat - dLat, lng: lng - dLng };
+}
+
+// 从有序点位提取 [lat,lng] 数组，用于连线
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+
+// 初始化地图：编号 divIcon 标记、按序虚线路线、点击弹出 名称+时间+导航链接。
+// elementId: 容器 id；points: [{lat, lng, name, time}]（按行程顺序，坐标须为 WGS-84）
+// opts 可选：{ tileUrl, attribution } 替换默认 OSM 瓦片源（如 OSM 访问不稳时换镜像）。
+function initTravelMap(elementId, points, opts) {
+  opts = opts || {};
+  var map = L.map(elementId);
+  L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: opts.attribution || '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  points.forEach(function (p, i) {
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(p.name) + '</b><br>'
+      + (p.time ? escapeHTML(p.time) + '<br>' : '')
+      + '<a href="' + buildNavLink(p.lat, p.lng, p.name, ua) + '">导航</a>'
+    );
+  });
+
+  var coords = routeCoordinates(points);
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2 }).addTo(map);
+  }
+  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  return map;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    buildNavLink: buildNavLink,
+    routeCoordinates: routeCoordinates,
+    gcj02ToWgs84: gcj02ToWgs84,
+    initTravelMap: initTravelMap,
+  };
+}
+
+  </script>
+  <script>
+// 出发前提醒：截止日期计算 + 渲染。浏览器与 Node 双用。
+
+// startDateISO: 'YYYY-MM-DD'；items: [{item, leadDays}]
+// 返回按 deadline 升序的 [{item, leadDays, deadline}]，deadline 为 'YYYY-MM-DD'
+// 用 UTC 做日期运算，避免本地时区导致的偏移。
+function computeReminders(startDateISO, items) {
+  return items
+    .map(function (it) {
+      var d = new Date(startDateISO + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() - it.leadDays);
+      return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+    })
+    .sort(function (a, b) {
+      return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0;
+    });
+}
+
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    return '<li class="todo-item">'
+      + '<input type="checkbox"> '
+      + '<span class="todo-deadline">' + r.deadline + '前</span> '
+      + '<span class="todo-text">' + escapeHTML(r.item) + '（建议提前' + r.leadDays + '天）</span>'
+      + '</li>';
+  }).join('');
+  return '<ul class="pretrip-todo">' + lis + '</ul>';
+}
+
+function reminderBadgeHTML(leadDays) {
+  return '<span class="reminder-badge">⚠️ 建议提前' + leadDays + '天订</span>';
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    computeReminders: computeReminders,
+    renderChecklistHTML: renderChecklistHTML,
+    reminderBadgeHTML: reminderBadgeHTML,
+  };
+}
+
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const trip = JSON.parse(document.getElementById('trip-data').textContent);
+    const $ = (sel) => document.querySelector(sel);
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    function periodName(p) {
+      return { morning: '上午', noon: '中午/下午', evening: '傍晚/晚上' }[p] || p;
+    }
+    function renderAction(actionLink) {
+      if (!actionLink || !actionLink.url) return '';
+      return '<a class="pill" target="_blank" rel="noreferrer" href="' + esc(actionLink.url) + '">' + esc(actionLink.label || '打开') + '</a>';
+    }
+    function parseGcj02(slot) {
+      const raw = slot && slot.amapPoi && slot.amapPoi.gcj02;
+      if (!raw) return null;
+      const parts = String(raw).split(',').map(Number);
+      if (parts.length !== 2 || parts.some(Number.isNaN)) return null;
+      return { lng: parts[0], lat: parts[1] };
+    }
+    function buildAmapNavigationLink(slot) {
+      const gcj = parseGcj02(slot);
+      if (!gcj) return '';
+      return 'https://uri.amap.com/navigation?to='
+        + encodeURIComponent(gcj.lng + ',' + gcj.lat + ',' + slot.name)
+        + '&mode=car&callnative=1';
+    }
+    function buildSystemMapLink(slot) {
+      return 'https://maps.apple.com/?daddr='
+        + encodeURIComponent(slot.lat + ',' + slot.lng)
+        + '&q=' + encodeURIComponent(slot.name)
+        + '&dirflg=d';
+    }
+    function buildFromToNavLink(fromSlot, toSlot) {
+      const fromGcj = parseGcj02(fromSlot);
+      const toGcj = parseGcj02(toSlot);
+      if (!fromGcj || !toGcj) return '';
+      return 'https://uri.amap.com/navigation?from='
+        + encodeURIComponent(fromGcj.lng + ',' + fromGcj.lat + ',' + fromSlot.name)
+        + '&to=' + encodeURIComponent(toGcj.lng + ',' + toGcj.lat + ',' + toSlot.name)
+        + '&mode=car&callnative=1';
+    }
+    function renderNavigationActions(slot, prevSlot) {
+      const amap = buildAmapNavigationLink(slot);
+      const system = buildSystemMapLink(slot);
+      var routeHtml = '';
+      // Inter-stop route info from previous slot
+      if (prevSlot && prevSlot.lat !== slot.lat && prevSlot.lng !== slot.lng) {
+        var trans = slot.transport;
+        var transText = '';
+        if (trans && trans.duration) {
+          transText = trans.duration + (trans.fare && trans.fare !== '自驾' ? ' · ' + trans.fare : '');
+        }
+        var routeLink = '';
+        if (prevSlot.amapPoi && slot.amapPoi) {
+          var routeUrl = buildFromToNavLink(prevSlot, slot);
+          if (routeUrl) routeLink = '<a href="' + esc(routeUrl) + '" target="_blank" rel="noreferrer">查看路线→</a>';
+        }
+        if (transText || routeLink) {
+          routeHtml = '<div class="slot-route-info"><span>🚗 从 <strong>' + esc(prevSlot.name) + '</strong> 到此：' + esc(transText) + '</span>' + routeLink + '</div>';
+        }
+      }
+      return routeHtml + '<div class="nav-actions">'
+        + (amap ? '<a class="nav-link nav-link--amap" target="_blank" rel="noreferrer" href="' + esc(amap) + '">高德导航</a>' : '')
+        + '<a class="nav-link nav-link--system" target="_blank" rel="noreferrer" href="' + esc(system) + '">系统地图</a>'
+        + '</div>';
+    }
+    function renderPretrip() {
+      const p = trip.preTrip;
+      $('#pretrip').innerHTML = [
+        ['天气节奏', p.weather.summary],
+        ['台风/暴雨', p.weather.typhoon],
+        ['穿搭装备', p.packing],
+        ['支付与现金', p.payment],
+        ['必备 App', p.apps.join(' / ')],
+        ['预约提醒', p.ticketTip]
+      ].map(([dt, dd]) => '<div><dt>' + esc(dt) + '</dt><dd>' + esc(dd) + '</dd></div>').join('');
+    }
+    function renderDrive() {
+      const booked = (trip.flights.booked || []).map(item =>
+        '<article class="drive-card"><span class="code">' + esc(item.code) + '</span><h3>' + esc(item.label) + '</h3><p>' + esc(item.time) + '</p></article>'
+      );
+      const candidates = (trip.flights.candidates || []).map(item =>
+        '<article class="drive-card"><span class="code">' + esc(item.code) + '</span><h3>' + esc(item.label) + '</h3><p><b>' + esc(item.time) + '</b></p><p>' + esc(item.note) + '</p>' + renderAction(item.actionLink) + '</article>'
+      );
+      $('#drive-list').innerHTML = booked.concat(candidates).join('');
+    }
+    function renderHotels() {
+      $('#hotels').innerHTML = trip.hotelAreas.map(area =>
+        '<article class="hotel-area"><h3>' + esc(area.area) + '</h3><p>' + esc(area.reason) + '</p><div class="hotel-options">' +
+        area.options.map(opt => '<div class="hotel-option"><p><span class="tier">' + esc(opt.tier) + '</span><b>' + esc(opt.name) + '</b></p><p>' + esc(opt.priceRange) + '</p><p>' + esc(opt.note) + '</p>' + renderAction(opt.actionLink) + '</div>').join('') +
+        '</div></article>'
+      ).join('');
+    }
+    function renderSlot(slot, prevSlot) {
+      const meta = [
+        slot.openingHours && ['开放', slot.openingHours],
+        slot.closedDays && ['休息', slot.closedDays],
+        slot.ticketPrice && ['票价', slot.ticketPrice],
+        slot.transport && ['交通', slot.transport.mode + ' / ' + slot.transport.duration + ' / ' + slot.transport.fare],
+        slot.seasonal && ['时令', slot.seasonal]
+      ].filter(Boolean).map(([k, v]) => '<span class="pill">' + esc(k) + '：' + esc(v) + '</span>').join('');
+      const img = slot.photo ? '<img src="' + esc(slot.photo) + '" alt="' + esc(slot.name) + '" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+      return '<article class="slot">' +
+        '<div class="photo" data-name="' + esc(slot.name) + '">' + img + '</div>' +
+        '<div class="slot-body"><div class="slot-top"><div><h4>' + esc(slot.name) + '</h4><p>' + esc(slot.time) + '</p></div><span class="period">' + esc(periodName(slot.period)) + '</span></div>' +
+        '<p>' + esc(slot.review) + '</p><div class="meta">' + meta + (slot.needsBooking ? reminderBadgeHTML(slot.leadDays) : '') + renderAction(slot.transport && slot.transport.actionLink) + '</div>' + renderNavigationActions(slot, prevSlot) + '</div>' +
+        '</article>';
+    }
+    function renderDining(day) {
+      return '<div class="dining-list">' + (day.dining || []).map(d =>
+        '<article class="dining-card"><h4>' + esc(d.meal) + ' · ' + esc(d.place) + '</h4><p>' + esc(d.hours) + '</p><div class="dish-list">' +
+        d.dishes.map(dish => '<span class="pill">' + esc(dish.name) + ' ' + esc(dish.price) + '</span>').join('') +
+        '</div></article>'
+      ).join('') + '</div>';
+    }
+      function renderDays() {
+        $('#days').innerHTML = trip.days.map(function(day, i) {
+          var tips = (day.tips || []).map(function(t) { return '<div class="mini">' + esc(t) + '</div>'; }).join('');
+          var alts = (day.alternatives || []).map(function(a) { return '<div class="mini"><b>' + esc(a.label) + '</b>：' + esc(a.summary) + '</div>'; }).join('');
+
+          // Interleave dining after their matching period's last slot
+          var mealPeriod = { '早餐': 'morning', '午餐': 'noon', '晚餐': 'evening' };
+          var items = [];
+          day.slots.forEach(function(s) { items.push({ type: 'slot', data: s }); });
+          (day.dining || []).forEach(function(d) {
+            var targetPeriod = mealPeriod[d.meal] || '';
+            var idx = -1;
+            for (var j = items.length - 1; j >= 0; j--) {
+              if (items[j].type === 'slot' && items[j].data.period === targetPeriod) { idx = j + 1; break; }
+            }
+            items.splice(idx >= 0 ? idx : items.length, 0, { type: 'dining', data: d });
+          });
+
+          var rendered = items.map(function(item, li) {
+            if (item.type === 'dining') {
+              return '<article class="dining-card" style="margin-bottom:12px;"><div><div class="slot-top"><div><h4>🍽️ ' + esc(item.data.meal) + ' · ' + esc(item.data.place) + '</h4></div><span class="period" style="background:var(--sun);color:#fff;">' + esc(item.data.meal) + '</span></div><div style="padding:10px 14px;"><p style="margin:0 0 6px;color:var(--muted);">' + esc(item.data.hours || '') + '</p><div class="dish-list">' +
+                (item.data.dishes || []).map(function(dish) { return '<span class="pill">' + esc(dish.name) + ' ' + esc(dish.price) + '</span>'; }).join('') +
+                '</div></div></article>';
+            }
+            var prev = li > 0 && items[li-1].type === 'slot' ? items[li-1].data : null;
+            return renderSlot(item.data, prev);
+          }).join('');
+
+          return '<article class="day"><div class="day-head"><div><div class="day-kicker">D' + (i + 1) + ' · ' + esc(day.date) + ' · ' + esc(day.weekday) + '</div><h3 class="day-title">' + esc(day.theme) + '</h3></div><div class="day-tips">' + tips + alts + '</div></div><div class="slots">' + rendered + '</div></article>';
+        }).join('');
+      }
+
+    function renderTips() {
+      $('#tips').innerHTML = trip.tips.map(t => '<div class="tip-card">' + esc(t) + '</div>').join('');
+      $('#sources').textContent = '数据来源：' + (trip.dataSources || []).map(s => s.name + '（' + s.scope + '）').join('；') + '。';
+    }
+    function getAmapOverviewLink() {
+      if (trip.routeMap && trip.routeMap.url) return trip.routeMap.url;
+      const route = (trip.flights.candidates || []).find(item => item.label === '全程高德路线可视化');
+      return route && route.actionLink ? route.actionLink.url : '';
+    }
+    function renderAmapOverview() {
+      const url = getAmapOverviewLink();
+      const frame = $('#amap-route-frame');
+      const link = $('#amap-route-link');
+      if (url) {
+        frame.src = url;
+        link.href = url;
+      } else {
+        frame.remove();
+        link.removeAttribute('href');
+        link.textContent = '暂无高德路线链接';
+      }
+    }
+    document.getElementById('todo-list').innerHTML = renderChecklistHTML(computeReminders(trip.startDate, trip.reminders));
+    renderPretrip();
+    renderDrive();
+    renderHotels();
+    renderDays();
+    renderTips();
+    renderAmapOverview();
+    const points = trip.days.flatMap(day => day.slots.map(slot => ({ lat: slot.lat, lng: slot.lng, name: slot.name, time: day.date + ' ' + slot.time })));
+    let fallbackMapReady = false;
+    function initFallbackMap() {
+      if (fallbackMapReady) return;
+      fallbackMapReady = true;
+      initTravelMap('map', points);
+    }
+    const fallback = document.getElementById('osm-fallback-details');
+    if (fallback) {
+      fallback.addEventListener('toggle', () => {
+        if (fallback.open) window.setTimeout(initFallbackMap, 0);
+      });
+    }
+  </script>
+</body>
+</html>
